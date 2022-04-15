@@ -1,0 +1,69 @@
+.table-data-control {
+  position: relative;
+  background-color: #fff;
+  height: 100%;
+  overflow-x: auto;
+}
+
+.m-td,
+.m-th {
+  padding: 0 10px;
+}
+
+.table-data-control .m-table {
+  width: 100%;
+  border-spacing: 0;
+  font-size: 13px;
+  padding: 10px;
+  overflow-y: scroll;
+
+}
+
+.table-data-control .m-table input{
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.m-table .m-tbody{
+  overflow-y: scroll;
+  max-height: calc(100% - 53px);
+}
+
+.m-table .m-thead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.table-data-control .m-table .m-th {
+  position: sticky;
+  background-color: #e5e8ec;
+  font-size: 12px;
+  height: 32px;
+  max-height: 32px;
+  border-right: 1px solid #c7c7c7;
+  border-bottom: 1px solid #c7c7c7;
+  color: #111111;
+}
+
+.table-data-control .m-table .m-td {
+  height: 44px;
+  border-bottom: 1px solid #c7c7c7;
+  border-right: 1px dotted #c7c7c7;
+  white-space: pre-wrap;
+}
+
+/* make column sticky */
+.m-table .m-thead .sticky-col {
+  position: sticky;
+  z-index: 10;
+}
+
+.m-table .m-tbody .static-col {
+  position: sticky;
+  z-index: 2;
+  background-color: #fff !important;
+}

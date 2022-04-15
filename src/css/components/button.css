@@ -1,0 +1,30 @@
+.m-btn{
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    font-family: MISA NotoSans;
+    font-weight: 550;
+    color: #fff;
+    cursor: pointer;
+}
+
+.m-btn.btn-clear{
+    color: #000;
+}
+.m-btn.btn-clear:hover{
+    background-color: #DFEEEA;
+}
+
+.m-btn.btn-func{
+    background-color: #2F5D62;
+}
+
+.m-btn.btn-func:hover{
+    background-color: #5E8B7E
+}
+
+button[disabled=disabled], 
+button:disabled {
+    background-color: grey !important;
+}

@@ -1,0 +1,27 @@
+.m-input-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.m-input-wrapper label{
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.m-input-wrapper .m-input{
+    min-height: 20px;
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #bebebe;
+    outline: none;
+}
+
+.m-input:hover{
+    border: 1px solid #A7C4BC;
+}
+
+.m-input:focus{
+    border: 1px solid #5E8B7E;
+}

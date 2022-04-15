@@ -1,0 +1,23 @@
+.m-icon{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.m-icon.icon--spider{
+
+    background-image: url("@/assets/icon/spider.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.m-icon.icon--avatar{
+    border-radius: 50%;
+
+    background-image: url("@/assets/icon/avatar-default.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
