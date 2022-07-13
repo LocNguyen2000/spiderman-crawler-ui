@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name: "overview"
+    name: "overview-page"
 }
 </script>
 <style>

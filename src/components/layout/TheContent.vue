@@ -6,11 +6,14 @@
 <script>
 
 export default {
-    name: "the-content",
-    components: {
-    }
-}
+  name: "the-content",
+ 
+  components: {
+  },
+  methods: {},
+
+};
 </script>
 <style>
-    @import url("@/css/layout/content.css");
+@import url("@/css/layout/content.css");
 </style>

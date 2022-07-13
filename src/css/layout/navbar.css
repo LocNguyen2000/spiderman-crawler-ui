@@ -16,7 +16,7 @@
 .m-navbar .branch-name-wrapper{
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    padding-left: 24px;
 }
 .branch-name-wrapper .branch-name{
     font-size: 14px;

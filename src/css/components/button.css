@@ -1,30 +1,57 @@
 .m-btn{
-    margin-left: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    border: none;
-    font-family: MISA NotoSans;
-    font-weight: 550;
-    color: #fff;
+    transition: all .2s ease;
+    border: 0;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    box-sizing: border-box;
+    background: 0 0;
+    overflow: visible;
+    border-radius: 3px;
+    font-family: MISA Notosans;
 }
 
-.m-btn.btn-clear{
-    color: #000;
-}
-.m-btn.btn-clear:hover{
-    background-color: #DFEEEA;
-}
-
-.m-btn.btn-func{
-    background-color: #2F5D62;
-}
-
-.m-btn.btn-func:hover{
-    background-color: #5E8B7E
+.m-btn-footer{
+    border: 1px solid #6b6c72;
+    color: #fff;
+    background-color: transparent;
+    position: relative;
+    border-radius: 3px;
+    font-family: MISA NotoSans Semi Bold;
+    cursor: pointer;
+    transition: all .2s ease;
 }
 
-button[disabled=disabled], 
-button:disabled {
-    background-color: grey !important;
+.btn-size-default{
+    height: 34px;
+    padding: 6px 16px;
 }
+
+.m-btn-primary{
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #2ca01c;
+}
+
+.m-btn-primary:hover{
+    background-color: #35bf22;
+    color: #fff;
+}
+
+.m-btn-secondary{
+    border: 1px solid #8d9096;
+    color: #111;
+    background-color: transparent;
+    font-family: MISA Notosans Bold;
+    font-size: 12px;
+}
+
+.m-btn-secondary:hover{
+    background-color: #d2d3d6;
+}
+
+.radius-btn--round{
+    border-radius: 30px 0 0 30px !important;
+}
+

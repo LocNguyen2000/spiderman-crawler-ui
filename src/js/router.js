@@ -1,16 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // 1. Định nghĩa / import các component
-import CrawlerPage from "@/views/setting/CrawlerPage.vue"
 import CrawlerList from "@/views/crawler/CrawlerList.vue"
-import OutputList from "@/views/output/OutputList.vue"
+import UrlPage from "@/views/url/UrlPage.vue"
 
 // 2. Định nghĩa vị trí route đến component
 const routes = [
-    { path: "/", redirect: '/crawlers' },
-    { path: "/setting", component: CrawlerPage },
-    { path: "/crawlers", component: CrawlerList },
-    { path: "/output", component: OutputList }
+    { path: '/', redirect: '/CA', },
+    {
+        path: "/CA", component: CrawlerList,
+    },
+    {
+        path: "/URL", component: UrlPage,
+    },
+
 ]
 
 // 3. Tạo các instance của router để truyền route

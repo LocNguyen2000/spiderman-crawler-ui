@@ -1,8 +1,8 @@
 <template>
   <div class="m-sidebar">
     <div class="m-logo-container">
-      <div class="menu-container"></div>
-      <div class="logo-text">SPIDERMAN</div>
+      <div class="m-icon icon--dragable m-icon-w-16"></div>
+      <div class="logo-text">HOME</div>
     </div>
     <div class="m-menu-item-list">
       <router-link
@@ -39,21 +39,18 @@ export default {
       selectRowItem: null,
       menuItemList: [
         {
-          page: "overview",
-          title: "Overview Page",
+          page: "CA",
+          title: "Dashboard",
+          icon: 'icon--overview'
+
         },
         {
-          page: "setting",
-          title: "Setting Up",
+          page: "URL",
+          title: "Tools",
+          icon: 'icon--tools'
         },
-        {
-          page: "crawlers",
-          title: "Crawler List",
-        },
-        {
-          page: "output",
-          title: "Output Data",
-        },
+        
+        
       ],
     };
   },

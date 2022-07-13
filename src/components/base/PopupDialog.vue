@@ -36,6 +36,8 @@ export default {
    * Created date: 12:02 31/03/2022
    */
   updated() {
+    console.log('Hello');
+    console.log(this.content, this.type, this.isShowPopup);
     // 1. Popup confirm xóa
     if (this.type == "Delete") {
       this.popupId = "dltPopup";

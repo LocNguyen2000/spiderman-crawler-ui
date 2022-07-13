@@ -28,5 +28,7 @@ export default {
 <style scoped>
   @import url("@/css/main.css");
   @import url("@/css/common.css");
+  @import url("@/css/width.css");
+  @import url("@/css/animation.css");
   @import url("@/css/components/icon.css");
 </style>

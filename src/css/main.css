@@ -65,6 +65,6 @@ input:focus{
 }
 
 .m-app-content{
-    width: calc(100% - 180px);
+    width: calc(100% - 160px);
     position: relative;
 }
