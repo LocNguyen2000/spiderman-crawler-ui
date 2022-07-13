@@ -1,0 +1,3 @@
+[submodule "spiderman-crawler"]
+	path = spiderman-crawler
+	url = https://github.com/LocNguyen2000/spiderman-crawler.git
