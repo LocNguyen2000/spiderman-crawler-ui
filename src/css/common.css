@@ -63,10 +63,17 @@
   justify-content: center;
 }
 
+.border-none{
+  border: none;
+}
 
 .space-around{
   justify-content: space-around;
 }
+.space-between{
+  justify-content: space-between;
+}
+
 .flex {
   display: flex !important;
 }

@@ -68,8 +68,10 @@
               </div>
               <div class="m-row">
                 <div class="w-75 mr-4">
-                  <div class="m-label">URLs (<span class="required">*</span>)</div>
-                  <div>
+                  <div class="m-label">
+                    URLs (<span class="required">*</span>)
+                  </div>
+                  <div style="overflow-y: auto; max-height: 130px">
                     <table class="m-table">
                       <tbody class="m-tbody">
                         <tr
@@ -78,40 +80,32 @@
                           class="m-tr"
                         >
                           <td
-                            v-show="index <= 3"
                             class="m-td bg-white text-align-center"
                           >
                             {{ ++index }}
                           </td>
-                          <td v-show="index <= 3" class="m-td bg-white">
+                          <td class="m-td bg-white">
                             {{ url }}
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <div
-                      v-show="this.crawler.urls && this.crawler.urls.length > 3"
-                    >
-                      ...
-                    </div>
                   </div>
                 </div>
 
                 <!-- FILE SELECTOR -->
                 <div
-                  class="w-25"
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                  "
+                  class="w-25 flex align-center"
                 >
-                  <label class="file-select">
+                  <label class="file-select w-80" title=".CSV file" >
                     <div class="select-button">
                       <span v-if="this.selectedFile"
                         >File: {{ this.selectedFile.name }}</span
                       >
-                      <span v-else>Choose File (.xlsx, .xls, .csv)</span>
+                      <span class="flex justify-center align-center" v-else>
+                        <span class="pr-2"> Choose File</span>
+                          <div class="m-icon m-icon-w-18 icon--import"></div>
+                      </span>
                     </div>
                     <input
                       type="file"
@@ -209,6 +203,7 @@
                 <th class="m-th" style="width: 100px; min-width: 100px">
                   Event Type
                 </th>
+                <th class="m-th" style="width: 30px; min-width: 30px"></th>
                 <th class="space sticky-col right"></th>
               </tr>
             </thead>
@@ -221,7 +216,7 @@
               >
                 <td class="space static-col left"></td>
                 <td class="m-td text-align-center">
-                  {{ selector.index }}
+                  {{ ++index }}
                 </td>
                 <td class="m-td">
                   <base-input
@@ -263,6 +258,19 @@
                 </td>
                 <td class="m-td text-align-center">
                   {{ selector.eventType }}
+                </td>
+                <td class="m-td flex justify-center align-center">
+                  <button
+                    class="m-icon m-icon-w-16 icon-delete border-none"
+                    @click.prevent="
+                      this.setShowPopup(
+                        true,
+                        this.ENUM.popupEnum.confirm,
+                        'Do you want to delete this selector?',
+                        () => {this.setDeleteRow(index)}
+                      )
+                    "
+                  ></button>
                 </td>
                 <td class="space static-col right"></td>
               </tr>
@@ -373,6 +381,13 @@ export default {
     this.currentCrawlerCode = this.crawler.crawlerCode;
   },
   methods: {
+    setDeleteRow(index) {
+      // this.selectors.filter
+      console.log(this.selectors[index - 1]);
+
+      this.selectors.splice(index - 1, 1);
+    },
+
     async changeFileHandler(event) {
       this.selectedFile = event.target.files ? event.target.files[0] : null;
       if (this.selectedFile) {
@@ -390,7 +405,7 @@ export default {
 
           data.map((obj) => {
             let key = Object.keys(obj)[0];
-            if (key.toLowerCase() == "url" || key.toLowerCase() == "urls") {
+            if (key.toLowerCase() == "url" || key.toLowerCase() == "urls" || key.toLowerCase() == "link" || key.toLowerCase() == "links") {
               result.push(obj[key]);
             }
           });
@@ -441,49 +456,51 @@ export default {
 
     async saveEventHandler() {
       try {
-         // khởi tạo biến check lỗi
+        // khởi tạo biến check lỗi
         let isError = false;
         let contentError = "";
         let listError = [];
-        
+
         // Validate dữ liệu
-        if (!this.crawler.crawlerCode){
-           // set lỗi
+        if (!this.crawler.crawlerCode) {
+          // set lỗi
           isError = true;
-          contentError = "Crawler's code cannot be empty." 
+          contentError = "Crawler's code cannot be empty.";
           listError.push(contentError);
         }
 
         // Validate dữ liệu
-        if (!this.crawler.crawlerName){
-           // set lỗi
+        if (!this.crawler.crawlerName) {
+          // set lỗi
           isError = true;
-          contentError = "User must enter crawler's name." 
+          contentError = "User must enter crawler's name.";
           listError.push(contentError);
         }
 
         // Validate dữ liệu
-        if (!this.crawler.selectorType){
-           // set lỗi
+        if (!this.crawler.selectorType) {
+          // set lỗi
           isError = true;
-          contentError = "User must choose one selector type." 
+          contentError = "User must choose one selector type.";
           listError.push(contentError);
         }
 
         // Validate dữ liệu
-        if (!this.crawler.urls || this.crawler.urls.length <= 0){
-           // set lỗi
+        if (!this.crawler.urls || this.crawler.urls.length <= 0) {
+          // set lỗi
           isError = true;
-          contentError = "User must import a CSV or Excel file contains URLs." 
+          contentError = "User must import a CSV or Excel file contains URLs.";
           listError.push(contentError);
         }
-        
+
         if (isError) {
           // Lỗi > báo popup
           this.setShowPopup(true, this.ENUM.popupEnum.alert, listError[0]);
-        }
-        else {
-          if (this.formMode == this.ENUM.formMode.Add && this.saveCounter == 0) {
+        } else {
+          if (
+            this.formMode == this.ENUM.formMode.Add &&
+            this.saveCounter == 0
+          ) {
             await this.addNewCrawler();
           } else if (
             this.formMode == this.ENUM.formMode.Edit ||
@@ -543,21 +560,16 @@ export default {
         // Báo lỗi >> của Axios trả về
         if (error.response) {
           if (error.response.status == 404) {
-            let errorMsg = error.response.data
+            let errorMsg = error.response.data;
 
-            this.setShowPopup(
-              true,
-              this.ENUM.popupEnum.warning,
-              errorMsg
-            );
-          }
-          else {
+            this.setShowPopup(true, this.ENUM.popupEnum.warning, errorMsg);
+          } else {
             console.log("Lỗi", error.response.data);
             this.setShowPopup(
               true,
               this.ENUM.popupEnum.alert,
-              this.errorMsg.common,
-            )
+              this.errorMsg.common
+            );
           }
         }
         // Báo lỗi >> của chung trả về
@@ -630,21 +642,26 @@ export default {
             if (ctr > 0) {
               result += columnDelimiter;
             }
-            result += (typeof item[key] === "string" && item[key].includes(columnDelimiter)) ? `"${item[key]}"` : item[key];
-            ctr++
+            result +=
+              typeof item[key] === "string" &&
+              item[key].includes(columnDelimiter)
+                ? `"${item[key]}"`
+                : item[key];
+            ctr++;
           });
 
           result += lineDelimiter;
         });
 
         var hiddenElement = document.createElement("a");
-        hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(result);
+        var universalBOM = "\uFEFF";
+
+        hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(universalBOM+result);
         hiddenElement.target = "_blank";
 
         //provide the name for the CSV file to be downloaded
         hiddenElement.download = "output.csv";
         hiddenElement.click();
-
       } else {
         this.setShowToast(
           true,

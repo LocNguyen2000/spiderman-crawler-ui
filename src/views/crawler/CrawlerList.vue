@@ -48,9 +48,10 @@
             <th class="m-th" style="width: 50px">#</th>
             <th class="m-th" style="width: 150px">Crawler Code</th>
             <th class="m-th" style="width: 250px">Crawler Name</th>
-            <th class="m-th" style="width: 300px">Description</th>
+            <th class="m-th max-w-320">Description</th>
             <th class="m-th" style="width: 150px">Selector Type</th>
-            <th class="m-th" style="width: 150px">Last modified</th>
+            <th class="m-th" style="width: 100px">Last modified</th>
+            <th class="m-th" style="width: 100px">Performance (s)</th>
             <th class="m-th">Task</th>
           </tr>
         </thead>
@@ -65,16 +66,28 @@
             <td class="m-td text-align-center">{{ ++index }}</td>
             <td class="m-td text-align-center">{{ crawler.crawlerCode }}</td>
             <td class="m-td">{{ crawler.crawlerName }}</td>
-            <td class="m-td">{{ crawler.description }}</td>
+            <td
+              class="m-td text-overflow-hidden max-w-320"
+              :title="crawler.description"
+            >
+              {{ crawler.description }}
+            </td>
             <td class="m-td text-align-center">{{ crawler.selectorType }}</td>
             <td class="m-td text-align-center">
               {{ dateDifference(crawler.modifiedDate) }}
             </td>
+            <td class="m-td text-align-center">
+              {{
+                crawler.performance
+                  ? parseFloat(crawler.performance).toPrecision(4)
+                  : "None"
+              }}
+            </td>
             <td class="m-td flex align-center justify-center">
-              <div class="btn-edit-data pr-2">Detail</div>
+              <div class="btn-edit-data pr-2 cur-pointer">Detail</div>
               <div
-                class="m-icon icon--arrowup-bg-blue"
-                @click="setShowPopover(true, data, rowIndex, $event)"
+                class="m-icon icon--arrowup-bg-blue cur-pointer"
+                @click.stop="setShowPopover(true, index - 1, $event)"
               ></div>
             </td>
           </tr>
@@ -89,6 +102,30 @@
         </div>
       </div>
     </div>
+    <transition>
+      <!-- POPOVER CHỨC NĂNG SỬA, XÓA, NHÂN BẢN -->
+      <ul
+        class="m-popover"
+        id="basePopover"
+        v-show="isShowPopover"
+        :style="{ top: popOverY + 'px', left: popOverX + 'px' }"
+      >
+        <li
+          class="popover-list"
+          @click.prevent="
+            this.setShowPopup(
+              true,
+              this.ENUM.popupEnum.confirm,
+              'Confirm delete this crawler?',
+              deleteByCode
+            )
+          "
+        >
+          Delete
+        </li>
+      </ul>
+    </transition>
+
     <transition name="fast">
       <crawler-detail
         v-if="this.isShowDialog"
@@ -183,6 +220,39 @@ export default {
     },
 
     // HIỆN CÁC COMPONENT VÀ SETTER
+    /**
+     * Mô tả : ẩn hiện popover
+     * @param _isShow: bool ẩn hiện popover
+     * @param _index: vị trí dòng trong danh sách
+     * @param _event: con trỏ
+     * Created by: NHLOC - MF1099
+     * Created date: 11:35 18/04/2022
+     */
+    setShowPopover(_isShow, _index = null, _event = null) {
+      // eslint-disable-next-line
+      debugger;
+
+      // Nếu dòng được chọn không bị trùng hoặc chưa được chọn >> chưa được chọn >> hiện popover
+      if (this.popOverIndex != _index) {
+        // Set vị trí của popover,
+        // dữ liệu được chọn,
+        // dòng được chọn
+        if (_event) {
+          this.popOverX = _event.clientX - 20;
+          this.popOverY = _event.clientY + 10;
+          this.popOverIndex = _index;
+        }
+        // Hiện popover
+        this.isShowPopover = _isShow;
+        this.rowCodeSelected = this.crawlers[_index].crawlerCode;
+      } else {
+        // reset các trạng thái + đóng popover
+        this.popOverIndex = null;
+        this.isShowPopover = false;
+        this.rowCodeSelected = null;
+      }
+    },
+
     setShowDialog(
       _isShowDialog,
       _formMode = null,
@@ -236,7 +306,21 @@ export default {
     },
 
     // API
+    async deleteByCode() {
+      if (this.rowCodeSelected) {
+        try {
+          const localApi = this.BASE_API.CRAWLER_CODE(this.rowCodeSelected);
 
+          const { data } = await axios.delete(localApi);
+
+          console.log(data);
+
+          this.crawlers.splice(this.popOverIndex, 1);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
     async getByCode() {
       console.log(this.rowCodeSelected);
       if (this.rowCodeSelected) {
@@ -310,7 +394,17 @@ export default {
       outputsInDialog: [],
       isShowDialog: false,
 
-      // thuộc tính của popup
+      // 4. Biến hiện popover
+      isShowPopover: false,
+
+      // Vị trí thứ tự hiện của popover
+      popOverIndex: null,
+
+      // tọa độ x, y trong màn hình
+      popOverX: null,
+      popOverY: null,
+
+      // 5. thuộc tính của popup
       // Biến hiện popup
       isShowPopup: false,
 
@@ -360,5 +454,6 @@ export default {
 @import url("@/css/components/button.css");
 @import url("@/css/components/dropdown.css");
 @import url("@/css/components/overview.css");
+@import url("@/css/components/popover.css");
 @import url("@/css/components/paging.css");
 </style>

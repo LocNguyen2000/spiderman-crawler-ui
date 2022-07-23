@@ -5,6 +5,9 @@
       <div class="m-row">
         <div class="title-text">URL Generator</div>
       </div>
+       <div class="m-row">
+        <div class="back">Generate Paginated URL(s)  -  Export URL(s) in CSV file</div>
+      </div>
     </div>
 
     <div class="view-content">
@@ -125,6 +128,8 @@ export default {
   },
   methods: {
     generateUrl() {
+      this.urls = []
+      
       if (isNumber(this.startPage) && isNumber(this.endPage)) {
         this.startPage = parseInt(this.startPage);
         this.endPage = parseInt(this.endPage);
@@ -148,16 +153,24 @@ export default {
 
     exportData() {
       if (this.urls.length > 0) {
+        let csv = ""
+
         //define the heading for each row of the data
-        var csv = "url\n";
+        csv = "url\n";
 
         //merge the data with CSV
         this.urls.forEach((url) => {
           csv += `${url}\n`;
+
+          console.log(url);
         });
 
+        console.log(csv);
+
         var hiddenElement = document.createElement("a");
-        hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+        var universalBOM = "\uFEFF";
+
+        hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(universalBOM+csv);
         hiddenElement.target = "_blank";
 
         //provide the name for the CSV file to be downloaded

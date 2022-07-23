@@ -10,6 +10,15 @@
   width: 16px !important;
   height: 16px !important;
 }
+.m-icon-w-18{
+  width: 18px !important;
+  height: 19px !important;
+}
+
+
+.m-icon.icon--import{
+  background-position: -539px -258px;
+}
 
 .m-icon.icon--expand{
   background-position: -607px -311px;
